@@ -52,7 +52,6 @@ class TimeTableController extends Controller
         $timeTable->save();
 
         $stagiaires = User::where('classe', Str::upper($request->classe))->get();
-
         foreach ($stagiaires as $stagiaire) {
             Mail::to($stagiaire->email)->send(new TimeTableUploaded(Str::upper($request->classe), $timeTable));
         }

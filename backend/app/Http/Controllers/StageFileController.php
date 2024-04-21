@@ -27,17 +27,17 @@ class StageFileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
             'file' => 'required|mimes:pdf,doc,docx|max:3000',
-            'extension' => 'required|in:pdf,doc,docx',
-            'size' => 'required|numeric',
         ]);
+
         $file = $request->file('file');
 
         $stageFile = new StageFile();
-        $stageFile->title = $request->title;
+        $stageFile->title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
-        $imagePath = 'stageFiles/' . now()->timestamp . "." . $file->extension();
+        Storage::disk('public')->delete('stageFiles/' . $file->getClientOriginalName());
+        StageFile::where('path', 'stageFiles/' . $file->getClientOriginalName())->forceDelete();
+        $imagePath = 'stageFiles/' . $file->getClientOriginalName();
         Storage::disk('public')->put($imagePath, file_get_contents($file));
 
         $stageFile->path = $imagePath;
@@ -75,17 +75,15 @@ class StageFileController extends Controller
         if (!$stageFile) return response()->json(['message' => 'file not found'], 404);
 
         $request->validate([
-            'title' => 'required',
             'file' => 'required|mimes:pdf,doc,docx|max:3000',
-            'extension' => 'required|in:pdf,doc,docx',
-            'size' => 'required|numeric',
         ]);
+
         $file = $request->file('file');
 
-        $stageFile->title = $request->title;
+        $stageFile->title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
         Storage::disk('public')->delete($stageFile->path);
-        $imagePath = 'stageFiles/' . now()->timestamp . "." . $file->extension();
+        $imagePath = 'stageFiles/' . $file->getClientOriginalName();
         Storage::disk('public')->put($imagePath, file_get_contents($file));
 
         $stageFile->path = $imagePath;

@@ -40,6 +40,8 @@ class AdminSeeder extends Seeder
             ],
         ];
 
-        Admin::insert($admins);
+        foreach ($admins as $admin) {
+            Admin::create($admin);
+        }
     }
 }
