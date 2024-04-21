@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,14 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::view('/', 'welcome');
+// Route::view('/', 'welcome');
 
-Route::group(['prefix' => ''], function () {
-    require __DIR__ . '/auth.php';
-});
-Route::group(['prefix' => 'admin'], function () {
-    require __DIR__ . '/admin.php';
-});
-Route::group(['prefix' => 'stagiaire'], function () {
-    require __DIR__ . '/user.php';
+Route::middleware(['auth:admin'])->group(function () {
+    Route::apiResources([
+        'users' => UserController::class
+    ]);
 });
