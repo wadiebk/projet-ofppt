@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title }}</title>
+    {{-- <title>{{ $title }}</title> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -24,14 +24,14 @@
                                 <td style="padding: 40px 0px 0px;">
                                     <div style="text-align: left;">
                                         <div style="padding-bottom: 20px;"><img
-                                                src="{{ Storage::url('images/ofppt_logo.png') }}" alt="OFPPT">
+                                                src="{{ asset('/storage/images/ofppt_logo.png') }}" alt="OFPPT">
                                         </div>
                                     </div>
                                     <div style="padding: 20px; background-color: rgb(255, 255, 255);">
                                         <div style="color: rgb(0, 0, 0); text-align: left;">
-                                            
-                                            <p style="padding-bottom: 16px"> Click Pour Telecharger l'emploi du temps:
-                                                <a href="{{route('downloadTimeTable')}}"
+
+                                            <p style="padding-bottom: 16px"> Click Pour Telecharger nouveau l'emploi du temps:
+                                                <a href="{{ route('downloadTimeTable', ['id' => $timeTable->id]) }}"
                                                     class="btn btn-primary">Telecharger</a>
                                             </p>
                                             <p style="padding-bottom: 16px">OFPPT</p>

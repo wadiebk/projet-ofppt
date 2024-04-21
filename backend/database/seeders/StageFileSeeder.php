@@ -30,6 +30,8 @@ class StageFileSeeder extends Seeder
             ];
         }
 
-        StageFile::insert($stageFiles);
+        foreach ($stageFiles as $stageFile) {
+            StageFile::create($stageFile);
+        }
     }
 }
