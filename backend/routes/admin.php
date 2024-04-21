@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DemandController;
+use App\Http\Controllers\StageFileController;
+use App\Http\Controllers\TimeTableController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::apiResources([
-        'users' => UserController::class
+        'users' => UserController::class,
+        'demands' => DemandController::class,
+        'stage-files' => StageFileController::class, // progresse
+        'time-tables' => TimeTableController::class, // done
     ]);
 });

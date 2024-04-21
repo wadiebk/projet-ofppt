@@ -40,7 +40,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->cin = $request->cin;
         $user->email = $request->email;
-        $user->classe = $request->classe;
+        $user->classe = Str::upper($request->classe);
         $user->password = $request->password;
         $user->save();
         return response()->json(['message' => 'user created successfully', 'cin' => $user->cin, 'email' => $user->email, 'password' => $password]);
@@ -83,7 +83,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->cin = $request->cin;
         $user->email = $request->email;
-        $user->classe = $request->classe;
+        $user->classe = Str::upper($request->classe);
         $user->save();
         return response()->json(['message' => 'user updated successfully']);
     }

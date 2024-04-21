@@ -36,7 +36,7 @@ class TimeTableUploaded extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'New Time Table Uploaded',
+            subject: 'Nouveau Emploi du temps',
         );
     }
 
@@ -64,7 +64,7 @@ class TimeTableUploaded extends Mailable
     public function attachments()
     {
         return [
-            $this->timeTable->path
+            // 'images/ofppt_logo.png'
         ];
     }
 }

@@ -32,15 +32,15 @@ class DemandController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->userId);
         $request->validate([
             'type' => 'required|in:Relevé des Notes,Attestation de poursuite de formation',
-            'user_id' => 'required|exists:users,id',
         ]);
 
 
         $demand = new Demand();
         $demand->type = $request->type;
-        $demand->user_id = $request->user_id;
+        $demand->user_id = $request->userId;
         $demand->save();
 
         $admins = Admin::all();

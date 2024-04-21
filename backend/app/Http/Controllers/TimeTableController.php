@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\TimeTable;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\TimeTableUploaded;
 use Illuminate\Support\Facades\Mail;
@@ -30,32 +31,31 @@ class TimeTableController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
+            // 'title' => 'required',
             'file' => 'required|mimes:pdf,doc,docx|max:3000',
-            'extension' => 'required|in:pdf,doc,docx',
-            'size' => 'required|numeric',
             'classe' => 'required',
         ]);
         $file = $request->file('file');
 
         $timeTable = new TimeTable();
-        $timeTable->title = $request->title;
+        $timeTable->title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
-        $imagePath = 'timeTables/' . now()->timestamp . "." . $file->extension();
+        Storage::disk('public')->delete('timeTables/' . $file->getClientOriginalName());
+        TimeTable::where('path', 'timeTables/' . $file->getClientOriginalName())->forceDelete();
+        $imagePath = 'timeTables/' . $file->getClientOriginalName();
         Storage::disk('public')->put($imagePath, file_get_contents($file));
 
         $timeTable->path = $imagePath;
         $timeTable->extension = $file->extension();
         $timeTable->size = $file->getSize();
-        $timeTable->classe = $request->classe;
+        $timeTable->classe = Str::upper($request->classe);
         $timeTable->save();
 
-        $stagiaires = User::where('classe', $request->classe)->get();
+        $stagiaires = User::where('classe', Str::upper($request->classe))->get();
 
         foreach ($stagiaires as $stagiaire) {
-            Mail::to($stagiaire->email)->send(new TimeTableUploaded($request->classe, $timeTable));
+            Mail::to($stagiaire->email)->send(new TimeTableUploaded(Str::upper($request->classe), $timeTable));
         }
-
         return response()->json(['message' => 'file uploaded successfully']);
     }
 
@@ -86,24 +86,22 @@ class TimeTableController extends Controller
         if (!$timeTable) return response()->json(['message' => 'file not found'], 404);
 
         $request->validate([
-            'title' => 'required',
+            // 'title' => 'required',
             'file' => 'required|mimes:pdf,doc,docx|max:3000',
-            'extension' => 'required|in:pdf,doc,docx',
-            'size' => 'required|numeric',
             'classe' => 'required',
         ]);
         $file = $request->file('file');
 
-        $timeTable->title = $request->title;
+        $timeTable->title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
         Storage::disk('public')->delete($timeTable->path);
-        $imagePath = 'timeTables/' . now()->timestamp . "." . $file->extension();
+        $imagePath = 'timeTables/' . $file->getClientOriginalName();
         Storage::disk('public')->put($imagePath, file_get_contents($file));
 
         $timeTable->path = $imagePath;
         $timeTable->extension = $file->extension();
         $timeTable->size = $file->getSize();
-        $timeTable->classe = $request->classe;
+        $timeTable->classe = Str::upper($request->classe);
         $timeTable->save();
 
         return response()->json(['message' => 'file uploaded successfully']);
