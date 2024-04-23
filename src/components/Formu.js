@@ -1,6 +1,6 @@
 import React from 'react'
 import './Formu.css'
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function Formu() {
   return (
@@ -13,10 +13,10 @@ export default function Formu() {
           </div>
           <div className='p-3'>
             <ul className='listes'>
-              <li><span><a href="/form">Demande Attestation scolaire</a></span></li>
-              <li><span><a href="/form/releve">Demande releve</a></span></li>
-              <li><span><a href="/form/stage">Telecharger stage</a></span></li>
-              <li><span><a href="/form/emploie">Emploie de temps</a></span></li>
+              <li><span><Link to="/form">Demande Attestation scolaire</Link></span></li>
+              <li><span><Link to="/form/releve">Demande releve</Link></span></li>
+              <li><span><Link to="/form/stage">Telecharger stage</Link></span></li>
+              <li><span><Link to="/form/emploie">Emploie de temps</Link></span></li>
             </ul>
           </div>
         </div>
