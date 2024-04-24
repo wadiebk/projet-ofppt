@@ -46,7 +46,7 @@ class DemandController extends Controller
         $admins = Admin::all();
 
         foreach ($admins as $admin) {
-            Mail::to($admin->email)->send(new NewDemand($request->user_id, $request->type));
+            Mail::to($admin->email)->send(new NewDemand($request->type, $request->userId));
         }
 
         return response()->json(['message' => 'Demand created successfully']);

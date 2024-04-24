@@ -37,6 +37,7 @@ class StageFileController extends Controller
 
         Storage::disk('public')->delete('stageFiles/' . $file->getClientOriginalName());
         StageFile::where('path', 'stageFiles/' . $file->getClientOriginalName())->forceDelete();
+        
         $imagePath = 'stageFiles/' . $file->getClientOriginalName();
         Storage::disk('public')->put($imagePath, file_get_contents($file));
 
