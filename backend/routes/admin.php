@@ -30,4 +30,8 @@ Route::middleware(['auth:admin'])->group(function () {
         'stage-files' => StageFileController::class, // progresse
         'time-tables' => TimeTableController::class, // done
     ]);
+    Route::group(['prefix' => 'demand'], function () {
+        Route::post('{demandId}/accept', [DemandController::class, 'accept']);
+        Route::post('{demandId}/not-accept', [DemandController::class, 'notAccept']);
+    });
 });

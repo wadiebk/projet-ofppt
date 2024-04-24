@@ -123,17 +123,17 @@ class DemandController extends Controller
 
         $user = User::find($demand->user_id);
 
-        Mail::to($user->email)->send(new DemandState($demand, 'accepted'));
+        Mail::to($user->email)->send(new DemandState($demand, true));
 
         return response()->json(['message' => 'Demand accepted successfully']);
     }
-    public function not_accept($id)
+    public function notAccept($id)
     {
         $demand = Demand::find($id);
         if (!$demand) return response()->json(['message' => 'Demand not found'], 404);
 
         $user = User::find($demand->user_id);
-        Mail::to($user->email)->send(new DemandState($demand, 'not_accepted'));
+        Mail::to($user->email)->send(new DemandState($demand, false));
 
         return response()->json(['message' => 'Demand accepted successfully']);
     }
