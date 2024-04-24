@@ -25,6 +25,7 @@ class NewDemand extends Mailable
     {
         $this->type = $type;
         $user = \App\Models\User::find($user_id);
+        // echo $user;
         $this->user = $user;
     }
 
@@ -36,7 +37,7 @@ class NewDemand extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'New Demand',
+            subject: 'Nouveau Demande',
         );
     }
 
@@ -51,6 +52,7 @@ class NewDemand extends Mailable
             view: 'Mails.newDemand',
             with: [
                 'type' => $this->type,
+                'subject' => "Nouveau Demande",
                 'user' => $this->user
             ]
 
