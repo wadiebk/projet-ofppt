@@ -28,10 +28,10 @@ Route::middleware(['auth:admin'])->group(function () {
         'users' => UserController::class,
         'demands' => DemandController::class,
         'stage-files' => StageFileController::class, // progresse
-        'time-tables' => TimeTableController::class, // done
+        'time-tables' => TimeTableController::class, // done //email
     ]);
     Route::group(['prefix' => 'demand'], function () {
-        Route::post('{demandId}/accept', [DemandController::class, 'accept']);
-        Route::post('{demandId}/not-accept', [DemandController::class, 'notAccept']);
+        Route::post('{demandId}/accept', [DemandController::class, 'accept']); //email
+        Route::post('{demandId}/not-accept', [DemandController::class, 'notAccept']); //email
     });
 });

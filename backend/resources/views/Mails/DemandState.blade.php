@@ -361,9 +361,12 @@
                       display: table-cell;
                       vertical-align: top;
                     ">
-                    
                                     <div style="
-                        background-color: #f0f5f6;
+                        @if(state)
+                            background-color: #e3ffd4;
+                        @elseif
+                            background-color: #ff9999;
+                        @endif
                         height: 100%;
                         width: 100% !important;
                         border-radius: 0px;
