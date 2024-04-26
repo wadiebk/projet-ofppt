@@ -22,7 +22,7 @@ use App\Http\Controllers\TimeTableController;
 // Route::view('/', 'welcome');
 
 Route::middleware(['auth:user'])->group(function () {
-    Route::post('/{userId}/demand', [DemandController::class, 'store'])->name('demand');
+    Route::post('/{userId}/demand', [DemandController::class, 'store'])->name('demand'); //email
     Route::get('stage-file/{id}/download', [StageFileController::class, 'download'])->name('downloadStageFile');
 });
 Route::get('time-table/{id}/download', [TimeTableController::class, 'download'])->name('downloadTimeTable');
